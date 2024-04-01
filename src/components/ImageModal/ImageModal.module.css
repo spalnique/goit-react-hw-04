@@ -1,0 +1,55 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  padding: 5px;
+  background-color: white;
+  border: 1px solid steelblue;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0 0 80px 2px black;
+}
+
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 90vw;
+  height: 90vh;
+}
+
+.modalImage {
+  border-radius: 8px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.modalClose {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: steelblue;
+  background-color: white;
+}
+
+.noScroll {
+  overflow: hidden;
+}
