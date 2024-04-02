@@ -14,7 +14,12 @@ const ImageModal = ({ isOpen, image, closeModal }) => {
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       preventScroll={true}>
-      <div className={style.imageWrapper}>
+      <div
+        className={style.imageWrapper}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          closeModal();
+        }}>
         {image && (
           <img
             className={style.modalImage}
@@ -25,7 +30,7 @@ const ImageModal = ({ isOpen, image, closeModal }) => {
           />
         )}
         <span className={style.modalClose} onClick={closeModal}>
-          <IoCloseCircleOutline size={64} />
+          <IoCloseCircleOutline size={24} />
         </span>
       </div>
     </ReactModal>

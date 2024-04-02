@@ -39,6 +39,7 @@ const App = () => {
         setResponse(response);
         if (response.total) setPhotos((prev) => [...prev, ...response.results]);
       } catch (error) {
+        console.log(error);
         setError(true);
       } finally {
         setLoading(false);
@@ -52,13 +53,15 @@ const App = () => {
       <SearchBar onSubmit={onSubmit} />
       {photos.length ? (
         <ImageGallery images={photos} openModal={open} />
-      ) : response && !photos.length ? (
-        <p>Oops! Nothing found...</p>
-      ) : null}
-      {loading && <Loader />}
+      ) : (
+        response && !photos.length && <p>Oops! Nothing found...</p>
+      )}
       {error && <ErrorMessage />}
-      {response && page < response.total_pages && (
-        <LoadMoreBtn onClick={handleLoadmore} />
+      {loading ? (
+        <Loader />
+      ) : (
+        response &&
+        page < response.total_pages && <LoadMoreBtn onClick={handleLoadmore} />
       )}
       <ImageModal
         isOpen={modal.visible}
