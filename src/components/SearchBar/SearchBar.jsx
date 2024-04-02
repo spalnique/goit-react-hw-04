@@ -1,12 +1,13 @@
 import toast, { Toaster } from 'react-hot-toast';
 import style from '../SearchBar/SearchBar.module.css';
 
-export const SearchBar = ({ onSubmit }) => {
+const SearchBar = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    const inputValue = e.target.elements.search.value;
+    const inputValue = e.target.elements.search.value.trim();
     if (!inputValue) {
-      toast.error('This is an error!');
+      toast.error('Search request cannot be empty');
+      e.target.reset();
       return;
     }
     onSubmit(inputValue);
@@ -38,3 +39,5 @@ export const SearchBar = ({ onSubmit }) => {
     </header>
   );
 };
+
+export default SearchBar;

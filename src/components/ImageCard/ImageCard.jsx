@@ -1,13 +1,8 @@
-import { forwardRef } from 'react';
 import style from '../ImageCard/ImageCard.module.css';
 
-export const ImageCard = forwardRef(function ImageCard(
-  { image, onClick },
-  ref
-) {
+const ImageCard = ({ image, onClick }) => {
   return (
     <div
-      ref={ref}
       className={style.cardWrapper}
       onClick={() => {
         onClick(image);
@@ -19,4 +14,6 @@ export const ImageCard = forwardRef(function ImageCard(
       />
     </div>
   );
-});
+};
+
+export default ImageCard;

@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getPhotos } from '../../unsplash-api/unsplash-api';
-import { SearchBar } from '../SearchBar/SearchBar';
-import { ImageGallery } from '../ImageGallery/ImageGallery';
-import { LoadMoreBtn } from '../LoadMoreBtn/LoadMoreBtn';
-import { Loader } from '../Loader/Loader';
-import { useModal } from '../../hooks/useModal';
-import { ImageModal } from '../ImageModal/ImageModal';
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import SearchBar from '../SearchBar/SearchBar';
+import ImageGallery from '../ImageGallery/ImageGallery';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
+import Loader from '../Loader/Loader';
+import useModal from '../../hooks/useModal';
+import ImageModal from '../ImageModal/ImageModal';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const App = () => {
   const [request, setRequest] = useState('');
   const [page, setPage] = useState(1);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [response, setResponse] = useState(null);
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,7 @@ const App = () => {
 
   const onSubmit = (userInput) => {
     if (userInput === request) return;
+    setError(false);
     setResponse(null);
     setPhotos([]);
     setPage(1);
@@ -30,43 +31,35 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (!request || !page) return;
-    try {
-      setLoading(true);
-      const fetchPhotos = async () => {
+    if (!request) return;
+    const fetchPhotos = async () => {
+      try {
+        setLoading(true);
         const response = await getPhotos(request, page);
         setResponse(response);
-        response.total > 0 &&
-          setPhotos((prev) => [...prev, ...response.results]);
-      };
-
-      fetchPhotos();
-    } catch (error) {
-      console.log(error);
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
+        if (response.total) setPhotos((prev) => [...prev, ...response.results]);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPhotos();
   }, [request, page]);
 
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
-
-      {response && photos.length ? (
+      {photos.length ? (
         <ImageGallery images={photos} openModal={open} />
       ) : response && !photos.length ? (
         <p>Oops! Nothing found...</p>
       ) : null}
-
+      {loading && <Loader />}
       {error && <ErrorMessage />}
-
       {response && page < response.total_pages && (
         <LoadMoreBtn onClick={handleLoadmore} />
       )}
-
-      {loading && <Loader />}
-
       <ImageModal
         isOpen={modal.visible}
         image={modal.image}
