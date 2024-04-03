@@ -5,7 +5,7 @@ import ImageGallery from '../ImageGallery/ImageGallery';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import Loader from '../Loader/Loader';
 import useModal from '../../hooks/useModal';
-import usePage from '../../hooks/usePage';
+import usePages from '../../hooks/usePages';
 import ImageModal from '../ImageModal/ImageModal';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
@@ -16,7 +16,7 @@ const App = () => {
   const [error, setError] = useState(false);
   const [photos, setPhotos] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { pages, setPage, setTotalPages } = usePage({ current: 1, total: 0 });
+  const { pages, setPage, setTotalPages } = usePages({ current: 1, total: 0 });
   const { modal, open, close } = useModal({ visible: false, image: null });
 
   const onSubmit = (userInput) => {
