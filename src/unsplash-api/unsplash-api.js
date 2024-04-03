@@ -12,6 +12,5 @@ axios.defaults.headers.common['Authorization'] =
   'Client-ID Dp58Xa1UComz2dxLn_cy8oZ__FmRAVQuQh9y8RX1usI';
 axios.defaults.headers.common['Accept-Version'] = 'v1';
 axios.defaults.params = {
-  orientation: 'landscape',
   per_page: perPage,
 };

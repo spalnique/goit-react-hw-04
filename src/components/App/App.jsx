@@ -5,29 +5,31 @@ import ImageGallery from '../ImageGallery/ImageGallery';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import Loader from '../Loader/Loader';
 import useModal from '../../hooks/useModal';
+import usePage from '../../hooks/usePage';
 import ImageModal from '../ImageModal/ImageModal';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const App = () => {
   const [request, setRequest] = useState('');
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
-  const [response, setResponse] = useState(null);
-  const [photos, setPhotos] = useState([]);
+  // const [response, setResponse] = useState(null);
+  const [photos, setPhotos] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { pages, setPage, setTotal } = usePage({ current: 1, total: 0 });
   const { modal, open, close } = useModal({ visible: false, image: null });
 
   const onSubmit = (userInput) => {
     if (userInput === request) return;
     setError(false);
-    setResponse(null);
-    setPhotos([]);
+    // setResponse(null);
+    setPhotos(null);
     setPage(1);
     setRequest(userInput);
   };
 
   const handleLoadmore = () => {
-    setPage(page + 1);
+    setPage(pages.current + 1);
   };
 
   useEffect(() => {
@@ -35,33 +37,38 @@ const App = () => {
     const fetchPhotos = async () => {
       try {
         setLoading(true);
-        const response = await getPhotos(request, page);
-        setResponse(response);
-        if (response.total) setPhotos((prev) => [...prev, ...response.results]);
+        const response = await getPhotos(request, pages.current);
+        // setResponse(response);
+        setTotal(response.total_pages);
+        setPhotos((prev) =>
+          prev ? [...prev, ...response.results] : [...response.results]
+        );
       } catch (error) {
-        console.log(error);
         setError(true);
       } finally {
         setLoading(false);
       }
     };
     fetchPhotos();
-  }, [request, page]);
+  }, [request, pages.current]);
 
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
-      {photos.length ? (
-        <ImageGallery images={photos} openModal={open} />
-      ) : (
-        response && !photos.length && <p>Oops! Nothing found...</p>
-      )}
+
       {error && <ErrorMessage />}
+
+      {Array.isArray(photos) &&
+        (photos.length ? (
+          <ImageGallery images={photos} openModal={open} />
+        ) : (
+          <p>Oops! Nothing found...</p>
+        ))}
+
       {loading ? (
         <Loader />
       ) : (
-        response &&
-        page < response.total_pages && <LoadMoreBtn onClick={handleLoadmore} />
+        pages.current < pages.total && <LoadMoreBtn onClick={handleLoadmore} />
       )}
       <ImageModal
         isOpen={modal.visible}

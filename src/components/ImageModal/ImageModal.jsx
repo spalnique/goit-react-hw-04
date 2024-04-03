@@ -4,6 +4,7 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 
 const ImageModal = ({ isOpen, image, closeModal }) => {
   ReactModal.setAppElement('#root');
+
   return (
     <ReactModal
       isOpen={isOpen}
@@ -29,6 +30,24 @@ const ImageModal = ({ isOpen, image, closeModal }) => {
             onContextMenu={closeModal}
           />
         )}
+        <ul className={style.descList}>
+          <li className={style.descItem}>
+            <span className={style.descItemTitle}></span>
+            <span className={style.descItemText}></span>
+          </li>
+          <li className={style.descItem}>
+            <span className={style.descItemTitle}></span>
+            <span className={style.descItemText}></span>
+          </li>
+          <li className={style.descItem}>
+            <span className={style.descItemTitle}></span>
+            <span className={style.descItemText}></span>
+          </li>
+          <li className={style.descItem}>
+            <span className={style.descItemTitle}></span>
+            <span className={style.descItemText}></span>
+          </li>
+        </ul>
         <span className={style.modalClose} onClick={closeModal}>
           <IoCloseCircleOutline size={24} />
         </span>

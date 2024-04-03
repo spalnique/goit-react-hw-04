@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function useModal(initialValue) {
+const useModal = (initialValue) => {
   const [modal, setModal] = useState(initialValue);
 
   const open = (imageData) =>
@@ -14,4 +14,6 @@ export default function useModal(initialValue) {
     setModal((prevModal) => ({ ...prevModal, visible: false, image: null }));
 
   return { modal, open, close };
-}
+};
+
+export default useModal;
