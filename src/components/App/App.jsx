@@ -10,20 +10,21 @@ import ImageModal from '../ImageModal/ImageModal';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const App = () => {
-  const [request, setRequest] = useState('');
-  // const [page, setPage] = useState(1);
-  const [error, setError] = useState(false);
   // const [response, setResponse] = useState(null);
+  // const [page, setPage] = useState(1);
+  const [request, setRequest] = useState('');
+  const [error, setError] = useState(false);
   const [photos, setPhotos] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { pages, setPage, setTotal } = usePage({ current: 1, total: 0 });
+  const { pages, setPage, setTotalPages } = usePage({ current: 1, total: 0 });
   const { modal, open, close } = useModal({ visible: false, image: null });
 
   const onSubmit = (userInput) => {
     if (userInput === request) return;
-    setError(false);
     // setResponse(null);
+    setError(false);
     setPhotos(null);
+    setTotalPages(0);
     setPage(1);
     setRequest(userInput);
   };
@@ -39,7 +40,7 @@ const App = () => {
         setLoading(true);
         const response = await getPhotos(request, pages.current);
         // setResponse(response);
-        setTotal(response.total_pages);
+        setTotalPages(response.total_pages);
         setPhotos((prev) =>
           prev ? [...prev, ...response.results] : [...response.results]
         );
