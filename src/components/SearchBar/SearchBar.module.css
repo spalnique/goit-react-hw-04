@@ -1,5 +1,6 @@
 .searchHeader {
-  background-color: steelblue;
+  background-color: white;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.75);
   position: fixed;
   z-index: 5;
   top: 0;
@@ -9,7 +10,31 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  /* transform: translateY(-100%); */
+  /* transition: transform 250ms ease-in-out; */
 }
+
+/* .triggerContainer {
+  background-color: gray;
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+
+.triggerContainer:hover {
+  z-index: -10;
+}
+
+.reminderContainer:hover + .searchHeader {
+  transform: translateY(100%);
+  transition: transform 250ms ease-in-out;
+}
+
+.reminderContainer {
+} */
 
 .searchForm {
   display: flex;
@@ -20,7 +45,7 @@
   width: 400px;
   padding: 8px 12px;
   outline: none;
-  border: 0.5px solid skyblue;
+  border: 0.5px solid rgba(0, 0, 0, 0.75);
   border-radius: 8px;
   transition: opacity 150ms ease-in-out;
 }
@@ -33,8 +58,8 @@
 .searchButton {
   padding: 8px 24px;
   background-color: white;
-  color: steelblue;
-  border: 1px solid steelblue;
+  color: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.75);
   border-radius: 8px;
   transition: all 150ms ease-in-out;
 }
@@ -43,7 +68,7 @@
 .searchButton:hover {
   transition: all 150ms ease-in-out;
   outline: none;
-  background-color: skyblue;
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
-  border: 1px solid white;
+  border: 1px solid rgba(0, 0, 0, 0.75);
 }

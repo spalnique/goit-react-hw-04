@@ -15,28 +15,32 @@ const SearchBar = ({ onSubmit }) => {
   };
 
   return (
-    <header className={style.searchHeader}>
-      <form className={style.searchForm} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="search"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search images and photos"
-          className={style.searchInput}
+    <>
+      <header className={style.searchHeader}>
+        <form className={style.searchForm} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="search"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            className={style.searchInput}
+          />
+          <button type="submit" className={style.searchButton}>
+            Search
+          </button>
+        </form>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: { background: '#fff', color: '#1f1fc4' },
+          }}
         />
-        <button type="submit" className={style.searchButton}>
-          Search
-        </button>
-      </form>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 3000,
-          style: { background: '#fff', color: '#1f1fc4' },
-        }}
-      />
-    </header>
+      </header>
+      {/* <div className={style.triggerContainer}></div>
+      <div className={style.reminderContainer}><span>search</span></div> */}
+    </>
   );
 };
 
