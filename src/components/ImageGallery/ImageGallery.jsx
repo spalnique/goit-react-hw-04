@@ -1,6 +1,6 @@
+import style from '../ImageGallery/ImageGallery.module.css';
 import { useEffect, useRef } from 'react';
 import ImageCard from '../ImageCard/ImageCard';
-import style from '../ImageGallery/ImageGallery.module.css';
 import { perPage } from '../../unsplash-api/unsplash-api';
 
 const ImageGallery = ({ images, openModal }) => {
