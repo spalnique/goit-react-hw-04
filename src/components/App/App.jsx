@@ -16,7 +16,8 @@ const App = () => {
   const [error, setError] = useState(false);
   const [photos, setPhotos] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { pages, setPage, setTotalPages } = usePages({ current: 1, total: 0 });
+  const { page, totalPages, resetPage, nextPage, resetTotal, setTotal } =
+    usePages();
   const { modal, open, close } = useModal({ visible: false, image: null });
 
   const onSubmit = (userInput) => {
@@ -24,13 +25,9 @@ const App = () => {
     // setResponse(null);
     setError(false);
     setPhotos(null);
-    setTotalPages(0);
-    setPage(1);
+    resetTotal();
+    resetPage();
     setRequest(userInput);
-  };
-
-  const handleLoadmore = () => {
-    setPage(pages.current + 1);
   };
 
   useEffect(() => {
@@ -38,9 +35,9 @@ const App = () => {
     const fetchPhotos = async () => {
       try {
         setLoading(true);
-        const response = await getPhotos(request, pages.current);
+        const response = await getPhotos(request, page);
         // setResponse(response);
-        setTotalPages(response.total_pages);
+        setTotal(response.total_pages);
         setPhotos((prev) =>
           prev ? [...prev, ...response.results] : [...response.results]
         );
@@ -51,7 +48,7 @@ const App = () => {
       }
     };
     fetchPhotos();
-  }, [request, pages.current]);
+  }, [request, page, setTotal]);
 
   return (
     <>
@@ -69,7 +66,7 @@ const App = () => {
       {loading ? (
         <Loader />
       ) : (
-        pages.current < pages.total && <LoadMoreBtn onClick={handleLoadmore} />
+        page < totalPages && <LoadMoreBtn onClick={nextPage} />
       )}
       <ImageModal
         isOpen={modal.visible}

@@ -17,7 +17,7 @@ const ImageGallery = ({ images, openModal }) => {
         behavior: 'smooth',
       });
     }
-  });
+  }, [images]);
 
   return (
     <ul
