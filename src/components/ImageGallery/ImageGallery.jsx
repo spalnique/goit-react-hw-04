@@ -4,16 +4,21 @@ import style from '../ImageGallery/ImageGallery.module.css';
 import { perPage } from '../../unsplash-api/unsplash-api';
 
 const ImageGallery = ({ images, openModal }) => {
-  const galleryItemRef = useRef();
   const galleryRef = useRef();
 
   useEffect(() => {
-    const imageHeight = galleryItemRef.current.getBoundingClientRect().height;
+    const headerElem = galleryRef.current.previousSibling;
+    const headerHeight = headerElem.getBoundingClientRect().height;
     const rowGap = parseInt(window.getComputedStyle(galleryRef.current).rowGap);
 
     if (images.length > perPage) {
-      window.scrollBy({
-        top: imageHeight * 3 + rowGap - 77,
+      const galleryElemArr = galleryRef.current.children;
+      const targetIndex = galleryElemArr.length - perPage;
+      const scrollValue =
+        galleryElemArr[targetIndex].offsetTop - headerHeight - rowGap;
+
+      window.scrollTo({
+        top: scrollValue,
         behavior: 'smooth',
       });
     }
@@ -25,7 +30,7 @@ const ImageGallery = ({ images, openModal }) => {
       className={style.galleryList}
       onContextMenu={(e) => e.preventDefault()}>
       {images.map((image) => (
-        <li ref={galleryItemRef} key={image.id} className={style.galleryItem}>
+        <li key={image.id} className={style.galleryItem}>
           <ImageCard image={image} onClick={openModal} />
         </li>
       ))}

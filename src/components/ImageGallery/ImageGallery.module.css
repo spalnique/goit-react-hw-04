@@ -6,7 +6,7 @@
   flex-wrap: wrap;
   gap: 16px 24px;
   margin: 0 auto 30px;
-  transform: translateY(77px);
+  padding-top: 77px;
 }
 
 .galleryItem {
