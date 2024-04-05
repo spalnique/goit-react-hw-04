@@ -31,7 +31,7 @@ const ImageGallery = ({ images, onImageClick }) => {
       onContextMenu={(e) => e.preventDefault()}>
       {images.map((image) => (
         <li key={image.id} className={style.galleryItem}>
-          <ImageCard image={image} onClick={openModal} />
+          <ImageCard image={image} onClick={onImageClick} />
         </li>
       ))}
     </ul>
