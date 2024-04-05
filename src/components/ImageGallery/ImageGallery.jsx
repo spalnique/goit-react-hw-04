@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import ImageCard from '../ImageCard/ImageCard';
 import { perPage } from '../../unsplash-api/unsplash-api';
 
-const ImageGallery = ({ images, openModal }) => {
+const ImageGallery = ({ images, onImageClick }) => {
   const galleryRef = useRef();
 
   useEffect(() => {
