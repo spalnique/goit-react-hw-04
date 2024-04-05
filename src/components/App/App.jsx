@@ -58,7 +58,7 @@ const App = () => {
 
       {Array.isArray(photos) &&
         (photos.length ? (
-          <ImageGallery images={photos} openModal={open} />
+          <ImageGallery images={photos} onImageClick={open} />
         ) : (
           <p>Oops! Nothing found...</p>
         ))}
