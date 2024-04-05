@@ -1,7 +1,8 @@
 import toast, { Toaster } from 'react-hot-toast';
 import style from '../SearchBar/SearchBar.module.css';
+import { forwardRef } from 'react';
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = forwardRef(function SearchBar({ onSubmit }, ref) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const inputValue = e.target.elements.search.value.trim();
@@ -16,7 +17,7 @@ const SearchBar = ({ onSubmit }) => {
 
   return (
     <>
-      <header className={style.searchHeader}>
+      <header ref={ref} className={style.searchHeader}>
         <form className={style.searchForm} onSubmit={handleSubmit}>
           <input
             type="text"
@@ -38,10 +39,8 @@ const SearchBar = ({ onSubmit }) => {
           }}
         />
       </header>
-      {/* <div className={style.triggerContainer}></div>
-      <div className={style.reminderContainer}><span>search</span></div> */}
     </>
   );
-};
+});
 
 export default SearchBar;
