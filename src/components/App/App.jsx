@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { getPhotos } from '../../unsplash-api/unsplash-api';
 import SearchBar from '../SearchBar/SearchBar';
 import ImageGallery from '../ImageGallery/ImageGallery';
@@ -10,8 +10,6 @@ import ImageModal from '../ImageModal/ImageModal';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const App = () => {
-  // const [response, setResponse] = useState(null);
-  // const [page, setPage] = useState(1);
   const [request, setRequest] = useState('');
   const [error, setError] = useState(false);
   const [photos, setPhotos] = useState(null);
@@ -20,9 +18,14 @@ const App = () => {
     usePages();
   const { modal, open, close } = useModal({ visible: false, image: null });
 
+  const headerElemRef = useRef();
+  const getHeaderHeight = useCallback(
+    () => headerElemRef.current.getBoundingClientRect().height,
+    []
+  );
+
   const onSubmit = (userInput) => {
     if (userInput === request) return;
-    // setResponse(null);
     setError(false);
     setPhotos(null);
     resetTotal();
@@ -36,7 +39,6 @@ const App = () => {
       try {
         setLoading(true);
         const response = await getPhotos(request, page);
-        // setResponse(response);
         setTotal(response.total_pages);
         setPhotos((prev) =>
           prev ? [...prev, ...response.results] : [...response.results]
@@ -52,13 +54,17 @@ const App = () => {
 
   return (
     <>
-      <SearchBar onSubmit={onSubmit} />
+      <SearchBar ref={headerElemRef} onSubmit={onSubmit} />
 
       {error && <ErrorMessage />}
 
       {Array.isArray(photos) &&
         (photos.length ? (
-          <ImageGallery images={photos} onImageClick={open} />
+          <ImageGallery
+            images={photos}
+            onImageClick={open}
+            getHeaderHeight={getHeaderHeight}
+          />
         ) : (
           <p>Oops! Nothing found...</p>
         ))}
