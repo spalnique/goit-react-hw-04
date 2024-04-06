@@ -62,7 +62,7 @@ const App = () => {
         (photos.length ? (
           <ImageGallery
             images={photos}
-            openModal={open}
+            onImageClick={open}
             getHeaderHeight={getHeaderHeight}
           />
         ) : (

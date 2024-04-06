@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import ImageCard from '../ImageCard/ImageCard';
 import { perPage } from '../../unsplash-api/unsplash-api';
 
-const ImageGallery = ({ images, openModal, getHeaderHeight }) => {
+const ImageGallery = ({ images, onImageClick, getHeaderHeight }) => {
   const galleryRef = useRef();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const ImageGallery = ({ images, openModal, getHeaderHeight }) => {
       onContextMenu={(e) => e.preventDefault()}>
       {images.map((image) => (
         <li key={image.id} className={style.galleryItem}>
-          <ImageCard image={image} onClick={openModal} />
+          <ImageCard image={image} onClick={onImageClick} />
         </li>
       ))}
     </ul>
