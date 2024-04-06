@@ -20,7 +20,7 @@ const App = () => {
 
   const headerElemRef = useRef();
   const getHeaderHeight = useCallback(
-    () => headerElemRef.current.getClientBoundingRect().height,
+    () => headerElemRef.current.getBoundingClientRect().height,
     []
   );
 
