@@ -13,4 +13,5 @@ axios.defaults.headers.common['Authorization'] =
 axios.defaults.headers.common['Accept-Version'] = 'v1';
 axios.defaults.params = {
   per_page: perPage,
+  orientation: 'landscape',
 };
